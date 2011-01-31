@@ -1,0 +1,103 @@
+#
+# Virtual Hosts
+#
+
+<VirtualHost *:${config:apache-shindig-port}>
+    ServerAdmin murcs@studivz.net
+    ServerName svz.shindig.local
+	ServerAlias svz.shindig.localhost
+	ServerAlias svz.shindig.${hostname}
+	ServerAlias svz.shindig.${hostname}.${config:domain}
+	ServerAlias svz.shindig.lan.${hostname}
+	ServerAlias svz.shindig.lan.${hostname}.${config:domain}
+	ServerAlias svz.shindig.wlan.${hostname}
+	ServerAlias svz.shindig.wlan.${hostname}.${config:domain}
+	
+    DocumentRoot ${buildout:directory}/Sites/Shindig/php
+
+    <Directory ${buildout:directory}/Sites/Shindig/php>
+        DirectoryIndex index.php
+        Options +FollowSymLinks All
+        AllowOverride all
+        Allow from all
+        php_value auto_prepend_file ${buildout:directory}/Sites/Shindig/php/autoprepend/localhost/svz.php
+    </Directory>
+
+    ErrorLog ${buildout:directory}/parts/apache/logs/shindig_error.log
+    CustomLog ${buildout:directory}/parts/apache/logs/shindig_access.log common
+</VirtualHost>
+
+<VirtualHost *:${config:apache-shindig-port}>
+    ServerAdmin murcs@studivz.net
+    ServerName avz.shindig.local
+	ServerAlias avz.shindig.localhost
+	ServerAlias avz.shindig.${hostname}
+	ServerAlias avz.shindig.${hostname}.${config:domain}
+	ServerAlias avz.shindig.lan.${hostname}
+	ServerAlias avz.shindig.lan.${hostname}.${config:domain}
+	ServerAlias avz.shindig.wlan.${hostname}
+	ServerAlias avz.shindig.wlan.${hostname}.${config:domain}
+	
+    DocumentRoot ${buildout:directory}/Sites/Shindig/php
+
+    <Directory ${buildout:directory}/Sites/Shindig/php>
+        DirectoryIndex index.php
+        Options +FollowSymLinks All
+        AllowOverride all
+        Allow from all
+        php_value auto_prepend_file ${buildout:directory}/Sites/Shindig/php/autoprepend/localhost/avz.php
+    </Directory>
+
+    ErrorLog ${buildout:directory}/parts/apache/logs/shindig_error.log
+    CustomLog ${buildout:directory}/parts/apache/logs/shindig_access.log common
+</VirtualHost>
+
+<VirtualHost *:${config:apache-shindig-port}>
+    ServerAdmin murcs@studivz.net
+    ServerName pvz.shindig.local
+	ServerAlias pvz.shindig.localhost
+	ServerAlias pvz.shindig.${hostname}
+	ServerAlias pvz.shindig.${hostname}.${config:domain}
+	ServerAlias pvz.shindig.lan.${hostname}
+	ServerAlias pvz.shindig.lan.${hostname}.${config:domain}
+	ServerAlias pvz.shindig.wlan.${hostname}
+	ServerAlias pvz.shindig.wlan.${hostname}.${config:domain}
+	
+    DocumentRoot ${buildout:directory}/Sites/Shindig/php
+
+    <Directory ${buildout:directory}/Sites/Shindig/php>
+        DirectoryIndex index.php
+        Options +FollowSymLinks All
+        AllowOverride all
+        Allow from all
+        php_value auto_prepend_file ${buildout:directory}/Sites/Shindig/php/autoprepend/localhost/pvz.php
+    </Directory>
+
+    ErrorLog ${buildout:directory}/parts/apache/logs/shindig_error.log
+    CustomLog ${buildout:directory}/parts/apache/logs/shindig_access.log common
+</VirtualHost>
+
+<VirtualHost *:${config:apache-shindig-port}>
+    ServerAdmin murcs@studivz.net
+    ServerName sandbox.shindig.local
+	ServerAlias sandbox.shindig.localhost
+	ServerAlias sandbox.shindig.${hostname}
+	ServerAlias sandbox.shindig.${hostname}.${config:domain}
+	ServerAlias sandbox.shindig.lan.${hostname}
+	ServerAlias sandbox.shindig.lan.${hostname}.${config:domain}
+	ServerAlias sandbox.shindig.wlan.${hostname}
+	ServerAlias sandbox.shindig.wlan.${hostname}.${config:domain}
+	
+    DocumentRoot ${buildout:directory}/Sites/Shindig/php
+
+    <Directory ${buildout:directory}/Sites/Shindig/php>
+        DirectoryIndex index.php
+        Options +FollowSymLinks All
+        AllowOverride all
+        Allow from all
+        php_value auto_prepend_file ${buildout:directory}/Sites/Shindig/php/autoprepend/localhost/sandbox.php
+    </Directory>
+
+    ErrorLog ${buildout:directory}/parts/apache/logs/shindig_error.log
+    CustomLog ${buildout:directory}/parts/apache/logs/shindig_access.log common
+</VirtualHost>

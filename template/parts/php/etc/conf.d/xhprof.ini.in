@@ -1,0 +1,9 @@
+[xhprof]
+extension=xhprof.so
+;
+; directory used by default implementation of the iXHProfRuns
+; interface (namely, the XHProfRuns_Default class) for storing
+; XHProf runs.
+;
+;xhprof.output_dir=<directory_for_storing_xhprof_runs>
+xhprof.output_dir=/tmp/xhprof

@@ -1,0 +1,15 @@
+
+Listen ${config:apache-port}
+Listen 8062
+Listen ${config:apache-shindig-port} 
+Listen ${config:apache-static-port}
+
+NameVirtualHost *:${config:apache-port}
+NameVirtualHost *:8062
+NameVirtualHost *:${config:apache-shindig-port} 
+NameVirtualHost *:${config:apache-static-port}
+
+<IfModule mod_ssl.c>
+    Listen ${config:apache-port-ssl}
+    NameVirtualHost *:${config:apache-port-ssl}
+</IfModule>
