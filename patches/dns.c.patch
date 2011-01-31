@@ -1,0 +1,50 @@
+--- ext/standard/dns.c	2009-08-11 17:07:35.000000000 -0500
++++ ext/standard/dns.c	2010-02-14 17:05:50.000000000 -0600
+@@ -2,7 +2,7 @@
+    +----------------------------------------------------------------------+
+    | PHP Version 5                                                        |
+    +----------------------------------------------------------------------+
+-   | Copyright (c) 1997-2008 The PHP Group                                |
++   | Copyright (c) 1997-2010 The PHP Group                                |
+    +----------------------------------------------------------------------+
+    | This source file is subject to version 3.01 of the PHP license,      |
+    | that is bundled with this package in the file LICENSE, and is        |
+@@ -18,7 +18,7 @@
+    +----------------------------------------------------------------------+
+  */
+ 
+-/* $Id: dns.c 287120 2009-08-11 22:07:35Z scottmac $ */
++/* $Id$ */
+ 
+ /* {{{ includes */
+ #include "php.h"
+@@ -44,10 +44,10 @@
+ #undef T_UNSPEC
+ #endif
+ #if HAVE_ARPA_NAMESER_H
+-#include <arpa/nameser.h>
++#ifdef DARWIN
++# define BIND_8_COMPAT 1
+ #endif
+-#if HAVE_ARPA_NAMESER_COMPAT_H
+-#include <arpa/nameser_compat.h>
++#include <arpa/nameser.h>
+ #endif
+ #if HAVE_RESOLV_H
+ #include <resolv.h>
+@@ -810,14 +810,8 @@
+ 			n = php_dns_search(handle, hostname, C_IN, type_to_fetch, answer.qb2, sizeof answer);
+ 
+ 			if (n < 0) {
+-				if (php_dns_errno(handle) == NO_DATA) {
+-					php_dns_free_handle(handle);
+-					continue;
+-				}
+-
+ 				php_dns_free_handle(handle);
+-				zval_dtor(return_value);
+-				RETURN_FALSE;
++				continue;
+ 			}
+ 
+ 			cp = answer.qb2 + HFIXEDSZ;
