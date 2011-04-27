@@ -1,0 +1,21 @@
+<VirtualHost *:${config:apache-port}>
+    ServerName localhost
+    DocumentRoot ${buildout:directory}/Sites
+    DirectoryIndex index.php index.html index.htm
+
+    <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+    </Directory>
+	
+    <Directory ${buildout:directory}/Sites>
+        AllowOverride All
+        Options Indexes FollowSymLinks All
+        Order allow,deny
+        Allow from all
+    </Directory>
+
+    ErrorLog ${buildout:directory}/parts/apache/logs/localhost_error.log
+    CustomLog ${buildout:directory}/parts/apache/logs/localhost_access.log common
+
+</VirtualHost>
