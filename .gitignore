@@ -1,0 +1,7 @@
+/parts
+/develop-eggs
+/bin/
+.installed.cfg
+/Sites
+*.pyc
+*.swp

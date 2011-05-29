@@ -1,0 +1,85 @@
+=======
+Changes
+=======
+
+2.1.0 (Unreleased)
+==================
+
+--------
+Features
+--------
+
+- Added the ``force-overwrite`` option to allow overwriting existing
+  files.
+
+
+2.0.3 (2009-07-02)
+==================
+
+-----
+Fixes
+-----
+
+- Use ``realpath`` helper function from zc.buildout on the buildout
+  directory too, such that it goes through the same normalization as
+  the path being compared and stands a chance of working on Windows,
+  due to possible drive letter case differences.
+
+2.0.2 (2009-05-04)
+==================
+
+-----
+Fixes
+-----
+
+- Turns out sorting paths was a bad idea.  They are already in a deterministic
+  order, AFAICT, because of the order or processing dependencies.  Sorting
+  them makes them *less* deterministic in practice, across machines.
+
+2.0.1 (2009-04-30)
+==================
+
+-----
+Fixes
+-----
+
+- Correct sdist generation to include all necessary files.
+
+- Doc formatting fixes.
+
+- Correct "Destinations already exist" message to list destinations without
+  ``.in`` suffix.
+
+2.0 (2009-04-30)
+================
+
+--------
+Features
+--------
+
+- Store your template files in a separate directory structure, using the
+  ``source-directory`` option.
+
+- Specify multiple files automatically with globs.
+
+- Templates can reference other buildout sections using the usual syntax, e.g.
+  ${buildout:parts}
+
+- Share options with other sections using the typical ``extends`` option.
+
+- Create destination directories automatically.
+
+- Define option values for templates dynamically in Python with the
+  ``interpreted-options`` option.
+
+- Get paths for eggs by specifying ``eggs`` and ``extra-paths``, just like
+  zc.recipe.egg script recipe.  These are available in template options in
+  colon-delimited, space-delimited, and quoted variants.  You can also build
+  your own using the ``interpreted-options`` feature.
+
+- Templates are not processed if there are no changes to them or the buildout.
+
+1.0 (2007-09-30)
+================
+
+Initial release.

@@ -1,0 +1,14 @@
+README.txt
+setup.py
+z3c/__init__.py
+z3c.recipe.filetemplate.egg-info/PKG-INFO
+z3c.recipe.filetemplate.egg-info/SOURCES.txt
+z3c.recipe.filetemplate.egg-info/dependency_links.txt
+z3c.recipe.filetemplate.egg-info/entry_points.txt
+z3c.recipe.filetemplate.egg-info/namespace_packages.txt
+z3c.recipe.filetemplate.egg-info/requires.txt
+z3c.recipe.filetemplate.egg-info/top_level.txt
+z3c.recipe.filetemplate.egg-info/zip-safe
+z3c/recipe/__init__.py
+z3c/recipe/filetemplate/__init__.py
+z3c/recipe/filetemplate/tests.py
