@@ -5,3 +5,5 @@
 /Sites
 *.pyc
 *.swp
+
+/var/
