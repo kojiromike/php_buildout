@@ -25,10 +25,10 @@ Description: ``z3c.recipe.filetemplate``
         
         For example, consider this simple template for a text file:
         
-            >>> write(sample_buildout, 'helloworld.txt.in',
-            ... """
-            ... Hello ${world}!
-            ... """)
+        >>> write(sample_buildout, 'helloworld.txt.in',
+        ... """
+        ... Hello ${world}!
+        ... """)
         
         Now let's create a buildout configuration so that we can substitute
         the values in this file.  All we have to do is define a part that uses
@@ -37,43 +37,43 @@ Description: ``z3c.recipe.filetemplate``
         whitespace).  Then we can add arbitrary parameters to the section.
         Those will be used to fill the variables in the template:
         
-            >>> write(sample_buildout, 'buildout.cfg',
-            ... """
-            ... [buildout]
-            ... parts = message
-            ...
-            ... [message]
-            ... recipe = z3c.recipe.filetemplate
-            ... files = helloworld.txt
-            ... world = Philipp
-            ... """)
+        >>> write(sample_buildout, 'buildout.cfg',
+        ... """
+        ... [buildout]
+        ... parts = message
+        ...
+        ... [message]
+        ... recipe = z3c.recipe.filetemplate
+        ... files = helloworld.txt
+        ... world = Philipp
+        ... """)
         
         After executing buildout, we can see that ``$world`` has indeed been
         replaced by ``Philipp``:
         
-            >>> print system(buildout)
-            Installing message.
+        >>> print system(buildout)
+        Installing message.
         
-            >>> cat(sample_buildout, 'helloworld.txt')
-            Hello Philipp!
+        >>> cat(sample_buildout, 'helloworld.txt')
+        Hello Philipp!
         
         Note that the output file uses the same permission bits as found on the input
         file.
         
-            >>> import stat
-            >>> import os
-            >>> input = os.path.join(sample_buildout, 'helloworld.txt.in')
-            >>> output = input[:-3]
-            >>> os.chmod(input, 0755)
-            >>> stat.S_IMODE(os.stat(input).st_mode) == 0755
-            True
-            >>> stat.S_IMODE(os.stat(output).st_mode) == 0755
-            False
-            >>> print system(buildout)
-            Uninstalling message.
-            Installing message.
-            >>> stat.S_IMODE(os.stat(output).st_mode) == 0755
-            True
+        >>> import stat
+        >>> import os
+        >>> input = os.path.join(sample_buildout, 'helloworld.txt.in')
+        >>> output = input[:-3]
+        >>> os.chmod(input, 0755)
+        >>> stat.S_IMODE(os.stat(input).st_mode) == 0755
+        True
+        >>> stat.S_IMODE(os.stat(output).st_mode) == 0755
+        False
+        >>> print system(buildout)
+        Uninstalling message.
+        Installing message.
+        >>> stat.S_IMODE(os.stat(output).st_mode) == 0755
+        True
         
         Source Folders and Globs
         ========================
@@ -87,118 +87,118 @@ Description: ``z3c.recipe.filetemplate``
         ``files`` as a filter if desired, but by default it will find any file (ending
         with ".in").
         
-            >>> write(sample_buildout, 'buildout.cfg',
-            ... """
-            ... [buildout]
-            ... parts = message
-            ...
-            ... [message]
-            ... recipe = z3c.recipe.filetemplate
-            ... source-directory = template
-            ... world = Philipp
-            ... """)
+        >>> write(sample_buildout, 'buildout.cfg',
+        ... """
+        ... [buildout]
+        ... parts = message
+        ...
+        ... [message]
+        ... recipe = z3c.recipe.filetemplate
+        ... source-directory = template
+        ... world = Philipp
+        ... """)
         
         Now we'll make a "template" directory, as listed in the buildout configuration
         above, and populate it for our example.
         
-            >>> mkdir(sample_buildout, 'template')
-            >>> mkdir(sample_buildout, 'template', 'etc')
-            >>> mkdir(sample_buildout, 'template', 'bin')
-            >>> write(sample_buildout, 'template', 'etc', 'helloworld.conf.in',
-            ... """
-            ... Hello ${world} from the etc dir!
-            ... """)
-            >>> write(sample_buildout, 'template', 'bin', 'helloworld.sh.in',
-            ... """
-            ... Hello ${world} from the bin dir!
-            ... """)
-            >>> os.chmod(
-            ...     os.path.join(
-            ...         sample_buildout, 'template', 'bin', 'helloworld.sh.in'),
-            ...     0711)
+        >>> mkdir(sample_buildout, 'template')
+        >>> mkdir(sample_buildout, 'template', 'etc')
+        >>> mkdir(sample_buildout, 'template', 'bin')
+        >>> write(sample_buildout, 'template', 'etc', 'helloworld.conf.in',
+        ... """
+        ... Hello ${world} from the etc dir!
+        ... """)
+        >>> write(sample_buildout, 'template', 'bin', 'helloworld.sh.in',
+        ... """
+        ... Hello ${world} from the bin dir!
+        ... """)
+        >>> os.chmod(
+        ...     os.path.join(
+        ...         sample_buildout, 'template', 'bin', 'helloworld.sh.in'),
+        ...     0711)
         
         Notice that, before running buildout, the ``helloworld.txt`` file is still
         around, we don't have an etc directory, and the bin directory doesn't have our
         ``helloworld.sh``.
         
-            >>> ls(sample_buildout)
-            -  .installed.cfg
-            d  bin
-            -  buildout.cfg
-            d  develop-eggs
-            d  eggs
-            -  helloworld.txt
-            -  helloworld.txt.in
-            d  parts
-            d  template
-            >>> ls(sample_buildout, 'bin')
-            -  buildout
+        >>> ls(sample_buildout)
+        -  .installed.cfg
+        d  bin
+        -  buildout.cfg
+        d  develop-eggs
+        d  eggs
+        -  helloworld.txt
+        -  helloworld.txt.in
+        d  parts
+        d  template
+        >>> ls(sample_buildout, 'bin')
+        -  buildout
         
         Now we install.  The old "helloworld.txt" is gone, and we now see etc.  Note
         that, for the destination, intermediate folders are created if they do not
         exist.
         
-            >>> print system(buildout)
-            Uninstalling message.
-            Installing message.
-            >>> ls(sample_buildout)
-            -  .installed.cfg
-            d  bin
-            -  buildout.cfg
-            d  develop-eggs
-            d  eggs
-            d  etc
-            -  helloworld.txt.in
-            d  parts
-            d  template
+        >>> print system(buildout)
+        Uninstalling message.
+        Installing message.
+        >>> ls(sample_buildout)
+        -  .installed.cfg
+        d  bin
+        -  buildout.cfg
+        d  develop-eggs
+        d  eggs
+        d  etc
+        -  helloworld.txt.in
+        d  parts
+        d  template
         
         The files exist and have the content we expect.
         
-            >>> ls(sample_buildout, 'bin')
-            - buildout
-            - helloworld.sh
-            >>> cat(sample_buildout, 'bin', 'helloworld.sh')
-            Hello Philipp from the bin dir!
-            >>> stat.S_IMODE(os.stat(os.path.join(
-            ...     sample_buildout, 'bin', 'helloworld.sh')).st_mode) == 0711
-            True
-            >>> ls(sample_buildout, 'etc')
-            - helloworld.conf
-            >>> cat(sample_buildout, 'etc', 'helloworld.conf')
-            Hello Philipp from the etc dir!
+        >>> ls(sample_buildout, 'bin')
+        - buildout
+        - helloworld.sh
+        >>> cat(sample_buildout, 'bin', 'helloworld.sh')
+        Hello Philipp from the bin dir!
+        >>> stat.S_IMODE(os.stat(os.path.join(
+        ...     sample_buildout, 'bin', 'helloworld.sh')).st_mode) == 0711
+        True
+        >>> ls(sample_buildout, 'etc')
+        - helloworld.conf
+        >>> cat(sample_buildout, 'etc', 'helloworld.conf')
+        Hello Philipp from the etc dir!
         
         If you use the ``files`` option along with ``source-directory``, it becomes a
         filter.  Every target file must match at least one of the names in ``files``.
         Therefore, if we only build .sh files, the etc directory will disappear.
         
-            >>> write(sample_buildout, 'buildout.cfg',
-            ... """
-            ... [buildout]
-            ... parts = message
-            ...
-            ... [message]
-            ... recipe = z3c.recipe.filetemplate
-            ... source-directory = template
-            ... files = *.sh
-            ... world = Philipp
-            ... """)
+        >>> write(sample_buildout, 'buildout.cfg',
+        ... """
+        ... [buildout]
+        ... parts = message
+        ...
+        ... [message]
+        ... recipe = z3c.recipe.filetemplate
+        ... source-directory = template
+        ... files = *.sh
+        ... world = Philipp
+        ... """)
         
-            >>> print system(buildout)
-            Uninstalling message.
-            Installing message.
-            >>> ls(sample_buildout)
-            -  .installed.cfg
-            d  bin
-            -  buildout.cfg
-            d  develop-eggs
-            d  eggs
-            -  helloworld.txt.in
-            d  parts
-            d  template
+        >>> print system(buildout)
+        Uninstalling message.
+        Installing message.
+        >>> ls(sample_buildout)
+        -  .installed.cfg
+        d  bin
+        -  buildout.cfg
+        d  develop-eggs
+        d  eggs
+        -  helloworld.txt.in
+        d  parts
+        d  template
         
-            >>> ls(sample_buildout, 'bin')
-            - buildout
-            - helloworld.sh
+        >>> ls(sample_buildout, 'bin')
+        - buildout
+        - helloworld.sh
         
         Also note that, if you use a source directory and your ``files`` specify a
         directory, the directory must match precisely.
@@ -214,27 +214,27 @@ Description: ``z3c.recipe.filetemplate``
         standard buildout syntax, but used in the template.  Notice
         ``${buildout:parts}`` in the template below.
         
-            >>> write(sample_buildout, 'helloworld.txt.in',
-            ... """
-            ... Hello ${world}.  I used these parts: ${buildout:parts}.
-            ... """)
-            >>> write(sample_buildout, 'buildout.cfg',
-            ... """
-            ... [buildout]
-            ... parts = message
-            ...
-            ... [message]
-            ... recipe = z3c.recipe.filetemplate
-            ... files = helloworld.txt
-            ... world = Philipp
-            ... """)
+        >>> write(sample_buildout, 'helloworld.txt.in',
+        ... """
+        ... Hello ${world}.  I used these parts: ${buildout:parts}.
+        ... """)
+        >>> write(sample_buildout, 'buildout.cfg',
+        ... """
+        ... [buildout]
+        ... parts = message
+        ...
+        ... [message]
+        ... recipe = z3c.recipe.filetemplate
+        ... files = helloworld.txt
+        ... world = Philipp
+        ... """)
         
-            >>> print system(buildout)
-            Uninstalling message.
-            Installing message.
+        >>> print system(buildout)
+        Uninstalling message.
+        Installing message.
         
-            >>> cat(sample_buildout, 'helloworld.txt')
-            Hello Philipp.  I used these parts: message.
+        >>> cat(sample_buildout, 'helloworld.txt')
+        Hello Philipp.  I used these parts: message.
         
         Sharing variables
         =================
@@ -242,40 +242,40 @@ Description: ``z3c.recipe.filetemplate``
         The recipe allows extending one or more sections, to decrease repetition, using
         the ``extends`` option.  For instance, consider the following buildout.
         
-            >>> write(sample_buildout, 'buildout.cfg',
-            ... """
-            ... [buildout]
-            ... parts = message
-            ... 
-            ... [template_defaults]
-            ... mygreeting = Hi
-            ... myaudience = World
-            ... 
-            ... [message]
-            ... recipe = z3c.recipe.filetemplate
-            ... files = helloworld.txt
-            ... extends = template_defaults
-            ...
-            ... myaudience = everybody
-            ... """)
+        >>> write(sample_buildout, 'buildout.cfg',
+        ... """
+        ... [buildout]
+        ... parts = message
+        ...
+        ... [template_defaults]
+        ... mygreeting = Hi
+        ... myaudience = World
+        ...
+        ... [message]
+        ... recipe = z3c.recipe.filetemplate
+        ... files = helloworld.txt
+        ... extends = template_defaults
+        ...
+        ... myaudience = everybody
+        ... """)
         
         The "message" section now has values extended from the "template_defaults"
         section, and overwritten locally.  A template of
         ``${mygreeting}, ${myaudience}!``...
         
-            >>> write(sample_buildout, 'helloworld.txt.in',
-            ... """
-            ... ${mygreeting}, ${myaudience}!
-            ... """)
+        >>> write(sample_buildout, 'helloworld.txt.in',
+        ... """
+        ... ${mygreeting}, ${myaudience}!
+        ... """)
         
         ...would thus result in ``Hi, everybody!``.
         
-            >>> print system(buildout)
-            Uninstalling message.
-            Installing message.
+        >>> print system(buildout)
+        Uninstalling message.
+        Installing message.
         
-            >>> cat(sample_buildout, 'helloworld.txt')
-            Hi, everybody!
+        >>> cat(sample_buildout, 'helloworld.txt')
+        Hi, everybody!
         
         Specifying paths
         ================
@@ -286,94 +286,94 @@ Description: ``z3c.recipe.filetemplate``
         options would be defined roughly as given here:
         
         ``os-paths``
-          ``(os.pathsep).join(paths)``
-          
+        ``(os.pathsep).join(paths)``
+        
         ``string-paths``
-          ``', '.join(repr(p) for p in all_paths)``
+        ``', '.join(repr(p) for p in all_paths)``
         
         ``space-paths``
-          ``' '.join(paths)``
+        ``' '.join(paths)``
         
         For instance, consider this example.
         
-            >>> write(sample_buildout, 'buildout.cfg',
-            ... """
-            ... [buildout]
-            ... parts = message
-            ... 
-            ... [message]
-            ... recipe = z3c.recipe.filetemplate
-            ... files = helloworld.txt
-            ... eggs = demo<0.3
-            ...
-            ... find-links = %(server)s
-            ... index = %(server)s/index
-            ... """ % dict(server=link_server))
+        >>> write(sample_buildout, 'buildout.cfg',
+        ... """
+        ... [buildout]
+        ... parts = message
+        ...
+        ... [message]
+        ... recipe = z3c.recipe.filetemplate
+        ... files = helloworld.txt
+        ... eggs = demo<0.3
+        ...
+        ... find-links = %(server)s
+        ... index = %(server)s/index
+        ... """ % dict(server=link_server))
         
         
-            >>> write(sample_buildout, 'helloworld.txt.in',
-            ... """
-            ... Hello!  Here are the paths for the ${eggs} eggs.
-            ... OS paths:
-            ... ${os-paths}
-            ... ---
-            ... String paths:
-            ... ${string-paths}
-            ... ---
-            ... Space paths:
-            ... ${space-paths}
-            ... """)
+        >>> write(sample_buildout, 'helloworld.txt.in',
+        ... """
+        ... Hello!  Here are the paths for the ${eggs} eggs.
+        ... OS paths:
+        ... ${os-paths}
+        ... ---
+        ... String paths:
+        ... ${string-paths}
+        ... ---
+        ... Space paths:
+        ... ${space-paths}
+        ... """)
         
-            >>> print system(buildout)
-            Getting distribution for 'demo<0.3'.
-            Got demo 0.2.
-            Getting distribution for 'demoneeded'.
-            Got demoneeded 1.2c1.
-            Uninstalling message.
-            Installing message.
+        >>> print system(buildout)
+        Getting distribution for 'demo<0.3'.
+        Got demo 0.2.
+        Getting distribution for 'demoneeded'.
+        Got demoneeded 1.2c1.
+        Uninstalling message.
+        Installing message.
         
-            >>> cat(sample_buildout, 'helloworld.txt') # doctest:+ELLIPSIS
-            Hello!  Here are the paths for the demo<0.3 eggs.
-            OS paths:
-            .../eggs/demo-0.2...egg:.../eggs/demoneeded-1.2c1...egg
-            ---
-            String paths:
-            '.../eggs/demo-0.2...egg', '.../eggs/demoneeded-1.2c1...egg'
-            ---
-            Space paths:
-            .../eggs/demo-0.2...egg .../eggs/demoneeded-1.2c1...egg
+        >>> cat(sample_buildout, 'helloworld.txt') # doctest:+ELLIPSIS
+        Hello!  Here are the paths for the demo<0.3 eggs.
+        OS paths:
+        .../eggs/demo-0.2...egg:.../eggs/demoneeded-1.2c1...egg
+        ---
+        String paths:
+        '.../eggs/demo-0.2...egg', '.../eggs/demoneeded-1.2c1...egg'
+        ---
+        Space paths:
+        .../eggs/demo-0.2...egg .../eggs/demoneeded-1.2c1...egg
         
         You can specify extra-paths as well, which will go at the end of the egg paths.
         
-            >>> write(sample_buildout, 'buildout.cfg',
-            ... """
-            ... [buildout]
-            ... parts = message
-            ... 
-            ... [message]
-            ... recipe = z3c.recipe.filetemplate
-            ... files = helloworld.txt
-            ... eggs = demo<0.3
-            ... extra-paths = ${buildout:directory}/foo
-            ...
-            ... find-links = %(server)s
-            ... index = %(server)s/index
-            ... """ % dict(server=link_server))
+        >>> write(sample_buildout, 'buildout.cfg',
+        ... """
+        ... [buildout]
+        ... parts = message
+        ...
+        ... [message]
+        ... recipe = z3c.recipe.filetemplate
+        ... files = helloworld.txt
+        ... eggs = demo<0.3
+        ... extra-paths = ${buildout:directory}/foo
+        ...
+        ... find-links = %(server)s
+        ... index = %(server)s/index
+        ... """ % dict(server=link_server))
         
-            >>> print system(buildout)
-            Uninstalling message.
-            Installing message.
+        >>> print system(buildout)
+        Uninstalling message.
+        Installing message.
         
-            >>> cat(sample_buildout, 'helloworld.txt') # doctest:+ELLIPSIS
-            Hello!  Here are the paths for the demo<0.3 eggs.
-            OS paths:
-            ...demo...:...demoneeded...:.../sample-buildout/foo
-            ---
-            String paths:
-            '...demo...', '...demoneeded...', '.../sample-buildout/foo'
-            ---
-            Space paths:
-            ...demo... ...demoneeded... .../sample-buildout/foo
+        >>> cat(sample_buildout, 'helloworld.txt') # doctest:+ELLIPSIS
+        Hello!  Here are the paths for the demo<0.3 eggs.
+        OS paths:
+        ...demo...:...demoneeded...:.../sample-buildout/foo
+        ---
+        String paths:
+        '...demo...', '...demoneeded...', '.../sample-buildout/foo'
+        ---
+        Space paths:
+        ...demo... ...demoneeded... .../sample-buildout/foo
         
         Defining options in Python
         ==========================
@@ -386,53 +386,53 @@ Description: ``z3c.recipe.filetemplate``
         multi-line expression (see ``first-interpreted-option`` and
         ``message-reversed-is-egassem``).
         
-            >>> write(sample_buildout, 'buildout.cfg',
-            ... """
-            ... [buildout]
-            ... parts = message
-            ... 
-            ... [message]
-            ... recipe = z3c.recipe.filetemplate
-            ... files = helloworld.txt
-            ... eggs = demo<0.3
-            ... interpreted-options = duplicate-os-paths=(os.pathsep).join(paths)
-            ...                       foo-paths='FOO'.join(all_paths)
-            ...                       silly-range = repr(range(5))
-            ...                       first-interpreted-option
-            ...                       message-reversed-is-egassem
-            ... first-interpreted-option = 
-            ...     options['interpreted-options'].split()[0].strip()
-            ... message-reversed-is-egassem=
-            ...     ''.join(
-            ...         reversed(
-            ...             buildout['buildout']['parts']))
-            ... not-interpreted=hello world
-            ...
-            ... find-links = %(server)s
-            ... index = %(server)s/index
-            ... """ % dict(server=link_server))
+        >>> write(sample_buildout, 'buildout.cfg',
+        ... """
+        ... [buildout]
+        ... parts = message
+        ...
+        ... [message]
+        ... recipe = z3c.recipe.filetemplate
+        ... files = helloworld.txt
+        ... eggs = demo<0.3
+        ... interpreted-options = duplicate-os-paths=(os.pathsep).join(paths)
+        ...                       foo-paths='FOO'.join(all_paths)
+        ...                       silly-range = repr(range(5))
+        ...                       first-interpreted-option
+        ...                       message-reversed-is-egassem
+        ... first-interpreted-option =
+        ...     options['interpreted-options'].split()[0].strip()
+        ... message-reversed-is-egassem=
+        ...     ''.join(
+        ...         reversed(
+        ...             buildout['buildout']['parts']))
+        ... not-interpreted=hello world
+        ...
+        ... find-links = %(server)s
+        ... index = %(server)s/index
+        ... """ % dict(server=link_server))
         
-            >>> write(sample_buildout, 'helloworld.txt.in',
-            ... """
-            ... ${not-interpreted}!
-            ... duplicate-os-paths: ${duplicate-os-paths}
-            ... foo-paths: ${foo-paths}
-            ... silly-range: ${silly-range}
-            ... first-interpreted-option: ${first-interpreted-option}
-            ... message-reversed-is-egassem: ${message-reversed-is-egassem}
-            ... """)
+        >>> write(sample_buildout, 'helloworld.txt.in',
+        ... """
+        ... ${not-interpreted}!
+        ... duplicate-os-paths: ${duplicate-os-paths}
+        ... foo-paths: ${foo-paths}
+        ... silly-range: ${silly-range}
+        ... first-interpreted-option: ${first-interpreted-option}
+        ... message-reversed-is-egassem: ${message-reversed-is-egassem}
+        ... """)
         
-            >>> print system(buildout)
-            Uninstalling message.
-            Installing message.
+        >>> print system(buildout)
+        Uninstalling message.
+        Installing message.
         
-            >>> cat(sample_buildout, 'helloworld.txt') # doctest:+ELLIPSIS
-            hello world!
-            duplicate-os-paths: ...demo-0.2...egg:...demoneeded-1.2c1...egg
-            foo-paths: ...demo-0.2...eggFOO...demoneeded-1.2c1...egg
-            silly-range: [0, 1, 2, 3, 4]
-            first-interpreted-option: duplicate-os-paths=(os.pathsep).join(paths)
-            message-reversed-is-egassem: egassem
+        >>> cat(sample_buildout, 'helloworld.txt') # doctest:+ELLIPSIS
+        hello world!
+        duplicate-os-paths: ...demo-0.2...egg:...demoneeded-1.2c1...egg
+        foo-paths: ...demo-0.2...eggFOO...demoneeded-1.2c1...egg
+        silly-range: [0, 1, 2, 3, 4]
+        first-interpreted-option: duplicate-os-paths=(os.pathsep).join(paths)
+        message-reversed-is-egassem: egassem
         
         
         
@@ -448,7 +448,7 @@ Description: ``z3c.recipe.filetemplate``
         --------
         
         - Added the ``force-overwrite`` option to allow overwriting existing
-          files.
+        files.
         
         
         2.0.3 (2009-07-02)
@@ -459,9 +459,9 @@ Description: ``z3c.recipe.filetemplate``
         -----
         
         - Use ``realpath`` helper function from zc.buildout on the buildout
-          directory too, such that it goes through the same normalization as
-          the path being compared and stands a chance of working on Windows,
-          due to possible drive letter case differences.
+        directory too, such that it goes through the same normalization as
+        the path being compared and stands a chance of working on Windows,
+        due to possible drive letter case differences.
         
         2.0.2 (2009-05-04)
         ==================
@@ -471,8 +471,8 @@ Description: ``z3c.recipe.filetemplate``
         -----
         
         - Turns out sorting paths was a bad idea.  They are already in a deterministic
-          order, AFAICT, because of the order or processing dependencies.  Sorting
-          them makes them *less* deterministic in practice, across machines.
+        order, AFAICT, because of the order or processing dependencies.  Sorting
+        them makes them *less* deterministic in practice, across machines.
         
         2.0.1 (2009-04-30)
         ==================
@@ -486,7 +486,7 @@ Description: ``z3c.recipe.filetemplate``
         - Doc formatting fixes.
         
         - Correct "Destinations already exist" message to list destinations without
-          ``.in`` suffix.
+        ``.in`` suffix.
         
         2.0 (2009-04-30)
         ================
@@ -496,24 +496,24 @@ Description: ``z3c.recipe.filetemplate``
         --------
         
         - Store your template files in a separate directory structure, using the
-          ``source-directory`` option.
+        ``source-directory`` option.
         
         - Specify multiple files automatically with globs.
         
         - Templates can reference other buildout sections using the usual syntax, e.g.
-          ${buildout:parts}
+        ${buildout:parts}
         
         - Share options with other sections using the typical ``extends`` option.
         
         - Create destination directories automatically.
         
         - Define option values for templates dynamically in Python with the
-          ``interpreted-options`` option.
+        ``interpreted-options`` option.
         
         - Get paths for eggs by specifying ``eggs`` and ``extra-paths``, just like
-          zc.recipe.egg script recipe.  These are available in template options in
-          colon-delimited, space-delimited, and quoted variants.  You can also build
-          your own using the ``interpreted-options`` feature.
+        zc.recipe.egg script recipe.  These are available in template options in
+        colon-delimited, space-delimited, and quoted variants.  You can also build
+        your own using the ``interpreted-options`` feature.
         
         - Templates are not processed if there are no changes to them or the buildout.
         
