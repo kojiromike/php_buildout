@@ -1,0 +1,22 @@
+====================================
+ Changes for the buildout s2.recipe
+====================================
+
+2010/04/22 0.1.2
+================
+
+- fixed stupid typo
+
+2010/04/22 0.1.1
+================
+
+- use 'build.sh' instead of 'make' for building rest_connect at
+  ejabberd recipe
+
+- changed source folder structure
+
+2010/03/25 0.1.0
+================
+
+- added option `svn_modules´ to ejabberd recipe for installing
+  ejabberd modules from svn repositories

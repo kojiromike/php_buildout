@@ -1,0 +1,4 @@
+setuptools
+hexagonit.recipe.download
+zc.recipe.egg
+py

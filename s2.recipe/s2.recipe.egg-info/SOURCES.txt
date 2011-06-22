@@ -1,0 +1,16 @@
+setup.cfg
+setup.py
+s2/__init__.py
+s2.recipe.egg-info/PKG-INFO
+s2.recipe.egg-info/SOURCES.txt
+s2.recipe.egg-info/dependency_links.txt
+s2.recipe.egg-info/entry_points.txt
+s2.recipe.egg-info/namespace_packages.txt
+s2.recipe.egg-info/requires.txt
+s2.recipe.egg-info/top_level.txt
+s2.recipe.egg-info/zip-safe
+s2/recipe/__init__.py
+s2/recipe/checkdependancies/__init__.py
+s2/recipe/ejabberd/__init__.py
+s2/recipe/hooks/__init__.py
+s2/recipe/phpext/__init__.py
