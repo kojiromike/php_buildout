@@ -1,2 +1,2 @@
-extension = runkit.so
-runkit.internal_override = true
+;extension = runkit.so
+;runkit.internal_override = true
