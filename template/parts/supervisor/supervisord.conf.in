@@ -1,0 +1,40 @@
+
+[supervisord]
+childlogdir = ${buildout:directory}/var/log
+logfile = ${buildout:directory}/parts/supervisor/supervisord.log
+logfile_maxbytes = 50MB
+logfile_backups = 10
+loglevel = info
+pidfile = ${buildout:directory}/var/supervisord.pid
+umask = 022
+nodaemon = false
+nocleanup = false
+
+[inet_http_server]
+port = 9001
+username = 
+password = 
+
+[supervisorctl]
+serverurl = http://localhost:9001
+username = 
+password = 
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory=supervisor.rpcinterface:make_main_rpcinterface
+
+[program:mysql]
+command = ${buildout:directory}/parts/mysql/bin/mysqld_safe ${buildout:directory}
+process_name = mysql
+directory = ${buildout:directory}
+priority = 10
+redirect_stderr = true
+
+
+[program:apache]
+command = ${buildout:directory}/parts/apache/bin/httpd -DNO_DETACH -f ${buildout:directory}/parts/apache/etc/conf/httpd.conf
+process_name = apache
+directory = ${buildout:directory}
+priority = 30
+redirect_stderr = true
+
