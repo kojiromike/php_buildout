@@ -1,10 +1,10 @@
 [client]
-port=${mysql:port}
+port=${config:mysqld-port}
 socket=${buildout:directory}/var/mysql/mysql.sock
 protocol=tcp
 
 [mysqld]
-port=${mysql:port}
+port=${config:mysqld-port}
 socket=${buildout:directory}/var/mysql/mysql.sock
 datadir=${buildout:directory}/var/mysql/db
 pid-file=${buildout:directory}/var/mysql/mysqld.pid
