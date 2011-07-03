@@ -14,8 +14,8 @@
 # of the server's control files begin with "/" (or "drive:/" for Win32), the
 # server will use that explicit path.  If the filenames do *not* begin
 # with "/", the value of ServerRoot is prepended -- so "logs/foo_log"
-# with ServerRoot set to "/Users/seba/Documents/projects/seba_buildout/parts/apache" will be interpreted by the
-# server as "/Users/seba/Documents/projects/seba_buildout/parts/apache/logs/foo_log".
+# with ServerRoot set to "${apache:location}" will be interpreted by the
+# server as "${apache:location}/logs/foo_log".
 
 #
 # ServerRoot: The top of the directory tree under which the server's
@@ -26,7 +26,7 @@
 # at a local disk.  If you wish to share the same ServerRoot for multiple
 # httpd daemons, you will need to change at least LockFile and PidFile.
 #
-ServerRoot "/Users/seba/Documents/projects/seba_buildout/parts/apache"
+ServerRoot "${apache:location}"
 
 #
 # Listen: Allows you to bind Apache to specific IP addresses and/or
@@ -164,7 +164,7 @@ ServerAdmin you@example.com
 # documents. By default, all requests are taken from this directory, but
 # symbolic links and aliases may be used to point to other locations.
 #
-DocumentRoot "/Users/seba/Documents/projects/seba_buildout/parts/apache/htdocs"
+DocumentRoot "${apache:location}/htdocs"
 
 #
 # Each directory to which Apache has access can be configured with respect
@@ -191,7 +191,7 @@ DocumentRoot "/Users/seba/Documents/projects/seba_buildout/parts/apache/htdocs"
 #
 # This should be changed to whatever you set DocumentRoot to.
 #
-<Directory "/Users/seba/Documents/projects/seba_buildout/parts/apache/htdocs">
+<Directory "${apache:location}/htdocs">
     #
     # Possible values for the Options directive are "None", "All",
     # or any combination of:
@@ -311,7 +311,7 @@ LogLevel warn
     # client.  The same rules about trailing "/" apply to ScriptAlias
     # directives as to Alias.
     #
-    ScriptAlias /cgi-bin/ "/Users/seba/Documents/projects/seba_buildout/parts/apache/cgi-bin/"
+    ScriptAlias /cgi-bin/ "${apache:location}/cgi-bin/"
 
 </IfModule>
 
@@ -327,7 +327,7 @@ LogLevel warn
 # "/Users/seba/Documents/projects/seba_buildout/parts/apache/cgi-bin" should be changed to whatever your ScriptAliased
 # CGI directory exists, if you have that configured.
 #
-<Directory "/Users/seba/Documents/projects/seba_buildout/parts/apache/cgi-bin">
+<Directory "${apache:location}/cgi-bin">
     AllowOverride None
     Options None
     Order allow,deny
