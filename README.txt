@@ -1,5 +1,22 @@
 This buildout runs a whole PHP development environment from a single directory.
 
+Dependencies
+------------
+
+The following dependencies are needed and not already bundled with OSX. You can install them by using homebrew for example:
+
+cmake
+gettext
+curl
+jpeg
+libmcrypt
+libevent
+syck
+readline
+pcre
+expat
+libiconv
+
 Installation
 ------------
 
