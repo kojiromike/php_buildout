@@ -8,6 +8,6 @@ port=${config:mysqld-port}
 socket=/tmp/mysql.sock
 datadir=${buildout:directory}/var/mysql/db
 pid-file=${buildout:directory}/var/mysql/mysqld.pid
-language=${buildout:directory}/parts/mysql/share/english
+language=${buildout:directory}/parts/mysql/share/mysql/english
 
 
