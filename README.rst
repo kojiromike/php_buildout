@@ -31,6 +31,8 @@ Included Software
 
   - PHPUnit Selenium
 
+  - PHPDocumentor
+
 - Memcached 1.4.5
 
 - libmemcached 0.48
