@@ -4,12 +4,6 @@ from setuptools import setup, find_packages
 entry_points = """
 [zc.buildout]
 phpext = s2.recipe.phpext:PhpExt
-hooks = s2.recipe.hooks:Hooks
-checkdependancies = s2.recipe.checkdependancies:CheckDependancies
-ejabberd = s2.recipe.ejabberd:Recipe
-
-[zc.buildout.uninstall]
-hooks = s2.recipe.hooks:uninstall
 """
 
 setup (
