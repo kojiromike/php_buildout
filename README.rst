@@ -70,6 +70,8 @@ The following dependencies are needed and not already bundled with OSX. You can 
 
 - libiconv
 
+- libgd
+
 Installation
 ------------
 
